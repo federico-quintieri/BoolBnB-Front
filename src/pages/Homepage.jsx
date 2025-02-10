@@ -1,3 +1,10 @@
+// Importo componenti per creare HomePage
+import { CardList } from "../components/CardList";
+
 export function Homepage() {
-  return <h1>Sono HomePage</h1>;
+  return (
+    <>
+      <CardList />
+    </>
+  );
 }
