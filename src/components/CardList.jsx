@@ -12,8 +12,8 @@ export function CardList() {
     // Faccio chiamata API
     axios.get(`${apiUrl}immobili`).then((response) => {
       // Gestisco la risposta avvenuta con successo
-      setImmobili(response.data);
-      console.log(response.data);
+      setImmobili(response.data.data);
+      console.log(response.data.data);
     });
   }, []);
 

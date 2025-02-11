@@ -5,7 +5,7 @@ import axios from "axios";
 
 // Oggetto input base
 const _inputs = {
-  tipo: 0,
+  // tipo: 0,
   city: "",
   bathrooms: 0,
   beds: 0,
@@ -41,8 +41,8 @@ export function RicercaImmobile() {
     axios
       .get(`${apiUrl}immobili?${queryParams}`)
       .then((response) => {
-        setImmobili(response.data);
-        console.log(response.data);
+        setImmobili(response.data.data);
+        console.log(response.data.data);
       })
       .catch((error) => {
         console.error("Errore nella richiesta:", error);
@@ -52,7 +52,7 @@ export function RicercaImmobile() {
   return (
     <div>
       <form onSubmit={HandleOnSubmitGet}>
-        <label>
+        {/* <label>
           Tipo di immobile:
           <select name="tipo" value={inputs.tipo} onChange={HandleOnChange}>
             <option value="0">Seleziona</option>
@@ -67,7 +67,7 @@ export function RicercaImmobile() {
             <option value="9">Residence</option>
             <option value="10">Bungalow</option>
           </select>
-        </label>
+        </label> */}
         <label>
           Città:
           <input
