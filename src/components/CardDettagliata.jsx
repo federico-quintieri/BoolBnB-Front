@@ -14,10 +14,8 @@ function CardDettagliata({
   square_meters,
   tipo,
   title,
-  recensioni,
 }) {
-
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -47,20 +45,7 @@ const navigate = useNavigate();
       <p>Nome: {owner_name}</p>
       <p>Email: {owner_email}</p>
 
-      {recensioni && recensioni.length > 0 && (
-        <div>
-          <h2>Recensioni</h2>
-          {recensioni.map((recensione, index) => (
-            <div key={index}>
-              <p>Recensore: {recensione.recensore}</p>
-              <p>Giorni di permanenza: {recensione.giorni_permanenza}</p>
-              <p>Commento: {recensione.commento}</p>
-              <p>Voto: {recensione.voto}</p>
-            </div>
-          ))}
-        </div>
-      )}
-      <button onClick={()=>navigate(-1)}>Torna indietro</button>
+      <button onClick={() => navigate(-1)}>Torna indietro</button>
     </div>
   );
 }
