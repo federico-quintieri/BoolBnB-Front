@@ -1,4 +1,4 @@
-import { Card } from "../components/Card";
+import Card from "../components/Card";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -29,6 +29,7 @@ export function CardList() {
             images={immobile.images}
             tipo={immobile.tipo}
             title={immobile.title}
+            slug={immobile.slug}
             key={immobile.slug}
           />
         ))
