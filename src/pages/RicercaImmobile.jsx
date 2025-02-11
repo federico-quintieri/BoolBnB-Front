@@ -5,7 +5,7 @@ import axios from "axios";
 
 // Oggetto input base
 const _inputs = {
-  tipo: 0
+  city: 0,
 };
 
 // Pagina RicercaImmobile ha il suo form
@@ -46,7 +46,7 @@ export function RicercaImmobile() {
   return (
     <div>
       <form onSubmit={HandleOnSubmitGet}>
-        <label>
+        {/* <label>
           Tipo di immobile:
           <select name="tipo" value={inputs.tipo} onChange={HandleOnChange}>
             <option value="0">Seleziona</option>
@@ -54,6 +54,16 @@ export function RicercaImmobile() {
             <option value="2">Appartamento</option>
             <option value="3">Attico</option>
           </select>
+        </label> */}
+        <label>
+          Città:
+          <input
+            type="text"
+            placeholder="Inserisci la città"
+            name="city"
+            value={inputs.city}
+            onChange={HandleOnChange}
+          />
         </label>
         <button type="submit">Invia</button>
       </form>
@@ -103,6 +113,18 @@ export function RicercaImmobile() {
         </label>
         <button type="submit">Invia</button>
       </form> */}
+
+      {immobili &&
+        immobili.map((immobile) => (
+          <Card
+            city={immobile.city}
+            description={immobile.description}
+            images={immobile.image}
+            tipo={immobile.tipo}
+            title={immobile.title}
+            key={immobile.slug}
+          />
+        ))}
     </div>
   );
 }
