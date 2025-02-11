@@ -5,7 +5,11 @@ import axios from "axios";
 
 // Oggetto input base
 const _inputs = {
-  city: 0,
+  tipo: 0,
+  city: "",
+  bathrooms: 0,
+  beds: 0,
+  rooms: 0,
 };
 
 // Pagina RicercaImmobile ha il suo form
@@ -17,10 +21,12 @@ export function RicercaImmobile() {
 
   // Callback che aggiorna l'oggetto state degli inputs ad ogni onChange
   const HandleOnChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value, type } = event.target;
+
     setInputs((prev_Inputs) => ({
       ...prev_Inputs,
-      [name]: value,
+      [name]:
+        type === "number" || name === "tipo" ? parseInt(value, 10) || 0 : value,
     }));
   };
 
@@ -42,19 +48,26 @@ export function RicercaImmobile() {
         console.error("Errore nella richiesta:", error);
       });
   };
-
+  console.log(inputs);
   return (
     <div>
       <form onSubmit={HandleOnSubmitGet}>
-        {/* <label>
+        <label>
           Tipo di immobile:
           <select name="tipo" value={inputs.tipo} onChange={HandleOnChange}>
             <option value="0">Seleziona</option>
-            <option value="1">Villa</option>
-            <option value="2">Appartamento</option>
-            <option value="3">Attico</option>
+            <option value="1">Appartamento</option>
+            <option value="2">Villa</option>
+            <option value="3">Monolocale</option>
+            <option value="4">Chalet</option>
+            <option value="5">Casale</option>
+            <option value="6">Loft</option>
+            <option value="7">Bilocale</option>
+            <option value="8">Attico</option>
+            <option value="9">Residence</option>
+            <option value="10">Bungalow</option>
           </select>
-        </label> */}
+        </label>
         <label>
           Città:
           <input
@@ -65,27 +78,14 @@ export function RicercaImmobile() {
             onChange={HandleOnChange}
           />
         </label>
-        <button type="submit">Invia</button>
-      </form>
-      {/* 
-        <label>
-          Città:
-          <input
-            type="text"
-            placeholder="Inserisci la città"
-            name="city"
-            value={objContext.city}
-            onChange={HandleOnChange}
-          />
-        </label>
 
         <label>
           Numero di stanze:
           <input
             type="number"
-            name="room"
+            name="rooms"
             min="1"
-            value={objContext.room}
+            value={inputs.rooms}
             onChange={HandleOnChange}
           />
         </label>
@@ -96,7 +96,7 @@ export function RicercaImmobile() {
             type="number"
             name="bathrooms"
             min="1"
-            value={objContext.bathrooms}
+            value={inputs.bathrooms}
             onChange={HandleOnChange}
           />
         </label>
@@ -107,12 +107,12 @@ export function RicercaImmobile() {
             type="number"
             name="beds"
             min="1"
-            value={objContext.beds}
+            value={inputs.beds}
             onChange={HandleOnChange}
           />
         </label>
         <button type="submit">Invia</button>
-      </form> */}
+      </form>
 
       {immobili &&
         immobili.map((immobile) => (
