@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import CardDettagliata from "../components/CardDettagliata";
+import { useGlobalContext } from "../components/GlobalContext";
 
-const apiUrl = import.meta.env.VITE_API_URL;
 
 export function DettaglioImmobile() {
   const [immobile, setImmobile] = useState();
   const { slug } = useParams();
+
+  const { apiUrl } = useGlobalContext();
 
   // Al mount del componente faccio chiamata api specifica ad un id
   useEffect(() => {

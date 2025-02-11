@@ -16,7 +16,6 @@ import { GlobalContextProvider } from "./components/GlobalContext";
 function App() {
   return (
     <GlobalContextProvider>
-      {" "}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AppLayout />}>
