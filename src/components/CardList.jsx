@@ -1,12 +1,12 @@
 import Card from "../components/Card";
 import axios from "axios";
 import { useState, useEffect } from "react";
-
-const apiUrl = import.meta.env.VITE_API_URL;
+import { useGlobalContext } from "../components/GlobalContext";
 
 export function CardList() {
   const [immobili, setImmobili] = useState([]);
 
+  const { apiUrl } = useGlobalContext();
   // Ad avvio componente faccio chiamata API
   useEffect(() => {
     // Faccio chiamata API
