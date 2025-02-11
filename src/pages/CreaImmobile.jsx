@@ -11,7 +11,7 @@ export function CreaImmobile() {
 
   return (
     <div>
-      <Form HandleOnSubmit={HandleOnSubmitGet} />
+      
     </div>
   );
 }
