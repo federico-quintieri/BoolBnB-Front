@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { CardDettagliata } from "../components/CardDettagliata";
+import CardDettagliata from "../components/CardDettagliata";
 
 const Card = ({ title, tipo, images, description, city, slug }) => (
   <div>
@@ -8,9 +8,7 @@ const Card = ({ title, tipo, images, description, city, slug }) => (
     <img src={images} alt={title} />
     <p>{description}</p>
     <p>{city}</p>
-    <Link to={`${CardDettagliata}`}>
-      <button>Vedi Dettagli</button>
-    </Link>
+    <Link to={`/dettagli_immobile/${slug}`}>Vedi Dettagli</Link>
   </div>
 );
 

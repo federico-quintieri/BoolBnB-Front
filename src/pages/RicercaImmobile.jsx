@@ -1,5 +1,5 @@
 import { useGlobalContext } from "../components/GlobalContext";
-import { Card } from "../components/Card";
+import Card from "../components/Card";
 import { useState } from "react";
 import axios from "axios";
 
