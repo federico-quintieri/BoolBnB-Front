@@ -8,8 +8,10 @@ import { useGlobalContext } from "../components/GlobalContext";
 const recensioneStart = {
   name: "",
   comment: "",
+  email: "",
   vote: 0,
   days_of_stay: 0,
+  id_real_estate: 0,
 };
 
 // Componente pagina che mostra dettagli immobile
@@ -27,6 +29,15 @@ export function DettaglioImmobile() {
     });
   }, []);
 
+  useEffect(() => {
+    if (immobile) {
+      setRecensione((prev_Recensione) => ({
+        ...prev_Recensione,
+        id_real_estate: immobile.id,
+      }));
+    }
+  }, [immobile]);
+
   // Funzione per gestire il cambio degli input
   const HandleOnChange = (event) => {
     const { name, value } = event.target;
@@ -39,7 +50,7 @@ export function DettaglioImmobile() {
   // Funzione per aggiungere una recensione
   const handleAddReview = () => {
     axios
-      .post(`${apiUrl}immobili/${slug}/recensioni`, recensione)
+      .post(`${apiUrl}immobili/review`, recensione)
       .then(() => {
         setImmobile((prev) => ({
           ...prev,
@@ -66,7 +77,8 @@ export function DettaglioImmobile() {
         console.error("Errore nella rimozione della recensione:", error)
       );
   };
-
+  console.log(immobile);
+  console.log(recensione);
   return (
     <div>
       {immobile ? (
@@ -98,6 +110,16 @@ export function DettaglioImmobile() {
                 value={recensione.name}
                 onChange={HandleOnChange}
                 placeholder="Nome"
+              />
+            </label>
+            <label htmlFor="">
+              Inserisci la tua mail
+              <input
+                type="text"
+                name="email"
+                value={recensione.email}
+                onChange={HandleOnChange}
+                placeholder="Email"
               />
             </label>
             <label htmlFor="">
@@ -138,9 +160,9 @@ export function DettaglioImmobile() {
           <div>
             <h2>Recensioni</h2>
             {immobile.recensioni.length > 0 ? (
-              <ul>
-                {immobile.recensioni.map((r) => (
-                  <li key={r.id}>
+              <ul key={immobile.id}>
+                {immobile.recensioni.map((r, index) => (
+                  <li key={r.id || `review-${index}`}>
                     <p>
                       <strong>{r.name}</strong>: {r.comment}
                     </p>
