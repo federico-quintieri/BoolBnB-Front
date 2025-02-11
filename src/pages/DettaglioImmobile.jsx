@@ -19,5 +19,5 @@ export function DettaglioImmobile() {
     });
   }, []);
 
-  return <div>{immobile ? <CardDettagliata title={immobile.title} /> : <h1>Sto caricando</h1>}</div>;
+  return <div>{immobile ? <CardDettagliata title={immobile.title} recensioni={immobile.recensioni}/> : <h1>Sto caricando</h1>}</div>;
 }

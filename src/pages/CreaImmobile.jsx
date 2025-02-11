@@ -1,4 +1,5 @@
-import { Form } from "../components/Form";
+
+// Pagina CreaImmobile ha il suo form
 
 export function CreaImmobile() {
   // Callback da passare all'OnSubmit che fa chiamata POST
