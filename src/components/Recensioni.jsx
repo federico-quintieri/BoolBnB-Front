@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const recensioneStart = {
@@ -12,7 +12,15 @@ const recensioneStart = {
 
 function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
   const [recensione, setRecensione] = useState(recensioneStart);
+  const [listaRecensioni, setListaRecensioni] = useState(recensioni);
 
+  useEffect(() => {
+    if (recensioni != undefined) {
+      setListaRecensioni(recensioni);
+    }
+  }, [recensioni]);
+
+  console.log("Recensioni:", recensioni);
   // Funzione per gestire il cambio degli input
   const handleOnChange = (event) => {
     const { name, value } = event.target;
@@ -111,15 +119,15 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
       <button onClick={handleAddReview}>Invia</button>
 
       <h2>Recensioni</h2>
-      {recensioni.length > 0 ? (
+      {listaRecensioni.length > 0 ? (
         <ul>
-          {recensioni.map((r, index) => (
+          {listaRecensioni.map((r, index) => (
             <li key={r.id || `review-${index}`}>
               <p>
-                <strong>{r.recensore}</strong>: {r.commento}
+                <strong>{r.name}</strong>: {r.comment}
               </p>
               <p>
-                Voto: {r.voto} ⭐ | Giorni di soggiorno: {r.giorni_permanenza}
+                Voto: {r.vote} ⭐ | Giorni di soggiorno: {r.days_of_stay}
               </p>
               <button onClick={() => handleRemoveReview(r.id)}>❌</button>
             </li>
