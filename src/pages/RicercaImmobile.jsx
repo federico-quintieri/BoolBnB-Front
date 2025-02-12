@@ -50,81 +50,91 @@ export function RicercaImmobile() {
   };
   console.log(inputs);
   return (
-    <div>
-      <form onSubmit={HandleOnSubmitGet}>
-        {/* <label>
-          Tipo di immobile:
-          <select name="tipo" value={inputs.tipo} onChange={HandleOnChange}>
-            <option value="0">Seleziona</option>
-            <option value="1">Appartamento</option>
-            <option value="2">Villa</option>
-            <option value="3">Monolocale</option>
-            <option value="4">Chalet</option>
-            <option value="5">Casale</option>
-            <option value="6">Loft</option>
-            <option value="7">Bilocale</option>
-            <option value="8">Attico</option>
-            <option value="9">Residence</option>
-            <option value="10">Bungalow</option>
-          </select>
-        </label> */}
-        <label>
-          Città:
+    <div className="max-w-3xl mx-auto p-4">
+      <form onSubmit={HandleOnSubmitGet} className="space-y-4">
+        <div className="flex flex-col space-y-2">
+          <label htmlFor="city" className="text-lg font-semibold">
+            Città:
+          </label>
           <input
             type="text"
+            id="city"
             placeholder="Inserisci la città"
             name="city"
             value={inputs.city}
             onChange={HandleOnChange}
+            className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </label>
+        </div>
 
-        <label>
-          Numero di stanze:
+        <div className="flex flex-col space-y-2">
+          <label htmlFor="rooms" className="text-lg font-semibold">
+            Numero di stanze:
+          </label>
           <input
             type="number"
+            id="rooms"
             name="rooms"
             min="1"
             value={inputs.rooms}
             onChange={HandleOnChange}
+            className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </label>
+        </div>
 
-        <label>
-          Numero di bagni:
+        <div className="flex flex-col space-y-2">
+          <label htmlFor="bathrooms" className="text-lg font-semibold">
+            Numero di bagni:
+          </label>
           <input
             type="number"
+            id="bathrooms"
             name="bathrooms"
             min="1"
             value={inputs.bathrooms}
             onChange={HandleOnChange}
+            className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </label>
+        </div>
 
-        <label>
-          Posti letto:
+        <div className="flex flex-col space-y-2">
+          <label htmlFor="beds" className="text-lg font-semibold">
+            Posti letto:
+          </label>
           <input
             type="number"
+            id="beds"
             name="beds"
             min="1"
             value={inputs.beds}
             onChange={HandleOnChange}
+            className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </label>
-        <button type="submit">Invia</button>
+        </div>
+
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Invia
+          </button>
+        </div>
       </form>
 
-      {immobili &&
-        immobili.map((immobile) => (
-          <Card
-            city={immobile.city}
-            description={immobile.description}
-            images={immobile.image}
-            tipo={immobile.tipo}
-            title={immobile.title}
-            key={immobile.slug}
-          />
-        ))}
+      <div className="mt-8">
+        {immobili &&
+          immobili.map((immobile) => (
+            <Card
+              city={immobile.city}
+              description={immobile.description}
+              images={immobile.image}
+              tipo={immobile.tipo}
+              title={immobile.title}
+              key={immobile.slug}
+            />
+          ))}
+      </div>
     </div>
   );
 }
