@@ -7,34 +7,32 @@ export function CardList() {
   const [immobili, setImmobili] = useState([]);
 
   const { apiUrl } = useGlobalContext();
-  // Ad avvio componente faccio chiamata API
+
   useEffect(() => {
-    // Faccio chiamata API
     axios.get(`${apiUrl}immobili`).then((response) => {
-      // Gestisco la risposta avvenuta con successo
       setImmobili(response.data.data);
       console.log(response.data.data);
     });
   }, []);
 
-// Devi fare un Link che porta ad un indirizzo prendendo lo slug dall'array immobili
-
   return (
-    <div>
-      {immobili ? (
-        immobili.map((immobile) => (
-          <Card
-            city={immobile.city}
-            description={immobile.description}
-            images={immobile.images}
-            tipo={immobile.tipo}
-            title={immobile.title}
-            slug={immobile.slug}
-            key={immobile.slug}
-          />
-        ))
+    <div className="container mx-auto p-4">
+      {immobili.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {immobili.map((immobile) => (
+            <Card
+              key={immobile.slug}
+              city={immobile.city}
+              description={immobile.description}
+              images={immobile.images}
+              tipo={immobile.tipo}
+              title={immobile.title}
+              slug={immobile.slug}
+            />
+          ))}
+        </div>
       ) : (
-        <h1>Sto caricando gli immobili</h1>
+        <h1 className="text-center text-xl font-semibold">Sto caricando gli immobili...</h1>
       )}
     </div>
   );
