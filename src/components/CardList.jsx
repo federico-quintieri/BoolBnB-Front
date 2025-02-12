@@ -18,7 +18,7 @@ export function CardList() {
   }, []);
 
 // Devi fare un Link che porta ad un indirizzo prendendo lo slug dall'array immobili
-
+ console.log(immobili);
   return (
     <div>
       {immobili ? (
