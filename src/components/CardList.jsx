@@ -15,6 +15,8 @@ export function CardList() {
     });
   }, []);
 
+  console.log(immobili.images);
+
   return (
     <div className="container mx-auto p-4">
       {immobili.length > 0 ? (
@@ -32,7 +34,9 @@ export function CardList() {
           ))}
         </div>
       ) : (
-        <h1 className="text-center text-xl font-semibold">Sto caricando gli immobili...</h1>
+        <h1 className="text-center text-xl font-semibold">
+          Sto caricando gli immobili...
+        </h1>
       )}
     </div>
   );
