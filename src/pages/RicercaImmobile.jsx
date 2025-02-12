@@ -131,6 +131,7 @@ export function RicercaImmobile() {
               images={immobile.image}
               tipo={immobile.tipo}
               title={immobile.title}
+              slug={immobile.slug}
               key={immobile.slug}
             />
           ))}
