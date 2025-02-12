@@ -2,13 +2,24 @@ import { Link } from "react-router-dom";
 import CardDettagliata from "../components/CardDettagliata";
 
 const Card = ({ title, tipo, images, description, city, slug }) => (
-  <div>
-    <h2>{title}</h2>
-    <h3>{tipo}</h3>
-    <img src={images} alt={title} />
-    <p>{description}</p>
-    <p>{city}</p>
-    <Link to={`/dettagli_immobile/${slug}`}>Vedi Dettagli</Link>
+  <div className="bg-white shadow-lg rounded-2xl overflow-hidden max-w-sm border border-gray-200 p-4">
+    <img
+      src={images}
+      alt={title}
+      className="w-full h-48 object-cover rounded-md"
+    />
+    <div className="p-4">
+      <h2 className="text-xl font-bold text-gray-800">{title}</h2>
+      <h3 className="text-sm text-gray-600 mb-2">{tipo}</h3>
+      <p className="text-gray-700 text-sm mb-4 line-clamp-3">{description}</p>
+      <p className="text-gray-500 text-xs mb-2">📍 {city}</p>
+      <Link
+        to={`/dettagli_immobile/${slug}`}
+        className="inline-block bg-blue-500 text-white text-sm font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition"
+      >
+        Vedi Dettagli
+      </Link>
+    </div>
   </div>
 );
 

@@ -13,15 +13,14 @@ const recensioneStart = {
 function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
   const [recensione, setRecensione] = useState(recensioneStart);
   const [listaRecensioni, setListaRecensioni] = useState(recensioni);
+  const [addReview, setAddReview] = useState(false);
 
   useEffect(() => {
-    if (recensioni != undefined) {
+    if (recensioni !== undefined) {
       setListaRecensioni(recensioni);
     }
   }, [recensioni]);
 
-  console.log("Recensioni:", recensioni);
-  // Funzione per gestire il cambio degli input
   const handleOnChange = (event) => {
     const { name, value } = event.target;
     setRecensione((prev) => ({
@@ -29,8 +28,7 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
       [name]: value,
     }));
   };
-  console.log(recensioni);
-  // Funzione per aggiungere una recensione
+
   const handleAddReview = () => {
     axios
       .post(`${apiUrl}immobili/review`, {
@@ -46,95 +44,112 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
         }));
 
         setRecensione(recensioneStart); // Reset dei campi dopo l'invio
+        setAddReview(false); // Chiudi il form dopo l'invio
       })
       .catch((error) =>
         console.error("Errore nell'aggiunta della recensione:", error)
       );
   };
 
-  // Funzione per rimuovere una recensione
-  const handleRemoveReview = (id) => {
-    axios
-      .delete(`${apiUrl}immobili/${idRealEstate}/recensioni/${id}`)
-      .then(() => {
-        setImmobile((prev) => ({
-          ...prev,
-          recensioni: prev.recensioni.filter((r) => r.id !== id),
-        }));
-      })
-      .catch((error) =>
-        console.error("Errore nella rimozione della recensione:", error)
-      );
-  };
-
   return (
-    <div>
-      <h2>Aggiungi una recensione</h2>
-      <label>
-        Nome:
-        <input
-          type="text"
-          name="name"
-          value={recensione.name}
-          onChange={handleOnChange}
-        />
-      </label>
-      <label>
-        Email:
-        <input
-          type="text"
-          name="email"
-          value={recensione.email}
-          onChange={handleOnChange}
-        />
-      </label>
-      <label>
-        Commento:
-        <textarea
-          name="comment"
-          value={recensione.comment}
-          onChange={handleOnChange}
-        />
-      </label>
-      <label>
-        Voto:
-        <input
-          type="number"
-          name="vote"
-          value={recensione.vote}
-          onChange={handleOnChange}
-          min="0"
-          max="5"
-        />
-      </label>
-      <label>
-        Giorni di soggiorno:
-        <input
-          type="number"
-          name="days_of_stay"
-          value={recensione.days_of_stay}
-          onChange={handleOnChange}
-        />
-      </label>
-      <button onClick={handleAddReview}>Invia</button>
+    <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-6">
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800">Aggiungi una recensione</h2>
 
-      <h2>Recensioni</h2>
+      <button
+        onClick={() => setAddReview(!addReview)} // Toggle del form
+        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md mt-2"
+      >
+        {addReview ? "Annulla" : "Apri form"}
+      </button>
+
+      {addReview && (
+        <div className="grid grid-cols-1 gap-4 mt-4">
+          <label className="block">
+            <span className="text-gray-700">Nome:</span>
+            <input
+              type="text"
+              name="name"
+              value={recensione.name}
+              onChange={handleOnChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            />
+          </label>
+
+          <label className="block">
+            <span className="text-gray-700">Email:</span>
+            <input
+              type="email"
+              name="email"
+              value={recensione.email}
+              onChange={handleOnChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            />
+          </label>
+
+          <label className="block">
+            <span className="text-gray-700">Commento:</span>
+            <textarea
+              name="comment"
+              value={recensione.comment}
+              onChange={handleOnChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            ></textarea>
+          </label>
+
+          <div className="grid grid-cols-2 gap-4">
+            <label className="block">
+              <span className="text-gray-700">Voto (0-5):</span>
+              <input
+                type="number"
+                name="vote"
+                value={recensione.vote}
+                onChange={handleOnChange}
+                min="0"
+                max="5"
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              />
+            </label>
+
+            <label className="block">
+              <span className="text-gray-700">Giorni di soggiorno:</span>
+              <input
+                type="number"
+                name="days_of_stay"
+                value={recensione.days_of_stay}
+                onChange={handleOnChange}
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              />
+            </label>
+          </div>
+
+          <button
+            onClick={handleAddReview}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md mt-4"
+          >
+            Invia Recensione
+          </button>
+        </div>
+      )}
+
+      <h2 className="text-2xl font-semibold mt-6 text-gray-800">Recensioni</h2>
+
       {listaRecensioni.length > 0 ? (
-        <ul>
+        <ul className="mt-4 space-y-4">
           {listaRecensioni.map((r, index) => (
-            <li key={r.id || `review-${index}`}>
-              <p>
-                <strong>{r.name}</strong>: {r.comment}
+            <li
+              key={r.id || `review-${index}`}
+              className="p-4 bg-gray-100 rounded-lg shadow"
+            >
+              <p className="font-semibold text-lg">{r.name}</p>
+              <p className="text-gray-700">{r.comment}</p>
+              <p className="text-sm text-gray-600 mt-1">
+                Voto: <span className="font-bold">{r.vote} ⭐</span> | Giorni di soggiorno: {r.days_of_stay}
               </p>
-              <p>
-                Voto: {r.vote} ⭐ | Giorni di soggiorno: {r.days_of_stay}
-              </p>
-              <button onClick={() => handleRemoveReview(r.id)}>❌</button>
             </li>
           ))}
         </ul>
       ) : (
-        <p>Ancora nessuna recensione.</p>
+        <p className="mt-4 text-gray-600">Ancora nessuna recensione.</p>
       )}
     </div>
   );
