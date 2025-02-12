@@ -22,11 +22,9 @@ const inputsStart = {
 export function CreaImmobile() {
   const [inputs, setInputs] = useState(inputsStart);
   const [error, setIsError] = useState(0);
-  //console.log(inputs);
 
   // Prendo url base api da context
   const { apiUrl } = useGlobalContext();
-  //console.log(apiUrl);
 
   // Callback da passare all'OnSubmit che fa chiamata POST
   const HandleOnSubmitGet = (event) => {
@@ -35,18 +33,15 @@ export function CreaImmobile() {
     axios
       .post(`${apiUrl}immobili`, inputs)
       .then((response) => {
-        //console.log(response);
         setIsError(1);
       })
       .catch(function (error) {
-        //console.log(error);
         setIsError(-1);
       });
     setInputs(inputsStart);
   };
 
   // Handle onChange degli input che mi aggiorna l'oggetto state inputs
-
   const HandleOnChange = (event) => {
     const { name, value } = event.target;
     setInputs((prevInputs) => ({ ...prevInputs, [name]: value }));
@@ -60,6 +55,9 @@ export function CreaImmobile() {
 
       <form onSubmit={HandleOnSubmitGet} className="space-y-4">
         <div>
+          <label htmlFor="owner_email" className="block text-sm font-medium text-gray-700">
+            Email
+          </label>
           <input
             type="email"
             name="owner_email"
@@ -72,6 +70,9 @@ export function CreaImmobile() {
         </div>
 
         <div>
+          <label htmlFor="owner_name" className="block text-sm font-medium text-gray-700">
+            Nome Proprietario
+          </label>
           <input
             type="text"
             name="owner_name"
@@ -84,6 +85,9 @@ export function CreaImmobile() {
         </div>
 
         <div>
+          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+            Titolo
+          </label>
           <input
             type="text"
             name="title"
@@ -96,6 +100,9 @@ export function CreaImmobile() {
         </div>
 
         <div>
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+            Descrizione
+          </label>
           <textarea
             name="description"
             value={inputs.description}
@@ -108,6 +115,9 @@ export function CreaImmobile() {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
+            <label htmlFor="rooms" className="block text-sm font-medium text-gray-700">
+              Stanze
+            </label>
             <input
               type="number"
               name="rooms"
@@ -120,6 +130,9 @@ export function CreaImmobile() {
           </div>
 
           <div>
+            <label htmlFor="beds" className="block text-sm font-medium text-gray-700">
+              Letti
+            </label>
             <input
               type="number"
               name="beds"
@@ -132,6 +145,9 @@ export function CreaImmobile() {
           </div>
 
           <div>
+            <label htmlFor="bathrooms" className="block text-sm font-medium text-gray-700">
+              Bagni
+            </label>
             <input
               type="number"
               name="bathrooms"
@@ -144,6 +160,9 @@ export function CreaImmobile() {
           </div>
 
           <div>
+            <label htmlFor="square_meters" className="block text-sm font-medium text-gray-700">
+              Metri Quadri
+            </label>
             <input
               type="number"
               name="square_meters"
@@ -157,6 +176,9 @@ export function CreaImmobile() {
         </div>
 
         <div>
+          <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+            Città
+          </label>
           <input
             type="text"
             name="city"
@@ -169,6 +191,9 @@ export function CreaImmobile() {
         </div>
 
         <div>
+          <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+            Indirizzo
+          </label>
           <input
             type="text"
             name="address"
@@ -181,6 +206,9 @@ export function CreaImmobile() {
         </div>
 
         <div>
+          <label htmlFor="images" className="block text-sm font-medium text-gray-700">
+            URL Immagini
+          </label>
           <input
             type="text"
             name="images"
@@ -193,6 +221,9 @@ export function CreaImmobile() {
         </div>
 
         <div>
+          <label htmlFor="id_type_real_estate" className="block text-sm font-medium text-gray-700">
+            ID Tipo Immobile
+          </label>
           <input
             type="number"
             name="id_type_real_estate"
