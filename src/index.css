@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+main {
+    /* background-image: url("/public/altrafotobnb.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: auto;
+    width: auto;
+    background-attachment: fixed */
+}
+
+.img-banner {
+    width: 100%;
+}
+
+.creaImmobile-img {
+    background-image: url("/public/sfondocitta.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: auto;
+    width: auto;
+    background-attachment: fixed
+}
