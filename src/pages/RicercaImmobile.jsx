@@ -50,7 +50,7 @@ export function RicercaImmobile() {
   };
   console.log(inputs);
   return (
-    <div className="max-w-3xl mx-auto p-4">
+    <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-8 mb-8">
       <form onSubmit={HandleOnSubmitGet} className="space-y-4">
         <div className="flex flex-col space-y-2">
           <label htmlFor="city" className="text-lg font-semibold">
@@ -131,6 +131,7 @@ export function RicercaImmobile() {
               images={immobile.image}
               tipo={immobile.tipo}
               title={immobile.title}
+              slug={immobile.slug}
               key={immobile.slug}
             />
           ))}

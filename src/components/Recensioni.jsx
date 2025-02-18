@@ -115,6 +115,7 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
               <input
                 type="number"
                 name="days_of_stay"
+                min="0"
                 value={recensione.days_of_stay}
                 onChange={handleOnChange}
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
