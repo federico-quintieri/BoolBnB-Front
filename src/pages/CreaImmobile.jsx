@@ -47,7 +47,9 @@ export function CreaImmobile() {
       setError(null);
       setInputs(inputsStart);
     } catch (err) {
-      setError(err.response?.data?.message || "Errore nell'inserimento dell'immobile.");
+      setError(
+        err.response?.data?.message || "Errore nell'inserimento dell'immobile."
+      );
       setSuccess(false);
     }
   };
@@ -250,6 +252,60 @@ export function CreaImmobile() {
           </div>
         </div>
 
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label
+              htmlFor="city"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Città
+            </label>
+            <input
+              type="text"
+              name="city"
+              value={inputs.city}
+              onChange={HandleOnChange}
+              placeholder="Città"
+              required
+              className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="address"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Indirizzo
+            </label>
+            <input
+              type="text"
+              name="address"
+              value={inputs.address}
+              onChange={HandleOnChange}
+              placeholder="Indirizzo"
+              required
+              className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Descrizione
+          </label>
+          <textarea
+            name="description"
+            value={inputs.description}
+            onChange={HandleOnChange}
+            placeholder="Descrizione dell'immobile"
+            required
+            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
         <button
           type="submit"
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-md mt-4"
@@ -263,11 +319,7 @@ export function CreaImmobile() {
           Ho inserito il tuo immobile con successo!
         </h1>
       )}
-      {error && (
-        <h1 className="text-red-600 mt-4">
-          {error}
-        </h1>
-      )}
+      {error && <h1 className="text-red-600 mt-4">{error}</h1>}
     </div>
   );
 }

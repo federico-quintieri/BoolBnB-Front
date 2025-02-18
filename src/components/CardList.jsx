@@ -11,7 +11,7 @@ export function CardList() {
   useEffect(() => {
     axios.get(`${apiUrl}immobili`).then((response) => {
       setImmobili(response.data.data);
-      console.log(response.data.data[7].images);
+      //console.log(response.data.data[7].images);
     });
   }, []);
 
