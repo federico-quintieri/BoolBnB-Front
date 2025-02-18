@@ -11,11 +11,9 @@ export function CardList() {
   useEffect(() => {
     axios.get(`${apiUrl}immobili`).then((response) => {
       setImmobili(response.data.data);
-      console.log(response.data.data);
+      //console.log(response.data.data[7].images);
     });
   }, []);
-
-  console.log(immobili.images);
 
   return (
     <div className="container flex justify-center mx-auto p-4">
