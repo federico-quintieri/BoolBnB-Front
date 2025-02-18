@@ -14,10 +14,14 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
   const [recensione, setRecensione] = useState(recensioneStart);
   const [listaRecensioni, setListaRecensioni] = useState(recensioni);
   const [addReview, setAddReview] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     if (recensioni !== undefined) {
-      setListaRecensioni(recensioni);
+      const sortedRecensioni = recensioni.sort(
+        (a, b) => new Date(b.created_in) - new Date(a.created_in)
+      );
+      setListaRecensioni(sortedRecensioni);
     }
   }, [recensioni]);
 
@@ -30,21 +34,32 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
   };
 
   const handleAddReview = () => {
+    const newReview = {
+      ...recensione,
+      created_in: new Date().toISOString(), // Aggiungi la data corrente in formato ISO
+      id_real_estate: idRealEstate,
+    };
+
     axios
-      .post(`${apiUrl}immobili/review`, {
-        ...recensione,
-        id_real_estate: idRealEstate,
-      })
+      .post(`${apiUrl}immobili/review`, newReview)
       .then(() => {
         setImmobile((prev) => ({
           ...prev,
           recensioni: prev.recensioni
-            ? [...prev.recensioni, recensione]
-            : [recensione],
+            ? [...prev.recensioni, newReview]
+            : [newReview],
         }));
 
         setRecensione(recensioneStart); // Reset dei campi dopo l'invio
         setAddReview(false); // Chiudi il form dopo l'invio
+
+        // Imposta il messaggio di successo
+        setSuccessMessage("Recensione inviata con successo!");
+
+        // Nascondi il messaggio dopo 3 secondi
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 3000);
       })
       .catch((error) =>
         console.error("Errore nell'aggiunta della recensione:", error)
@@ -53,7 +68,9 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-6">
-      <h2 className="text-2xl font-semibold mb-4 text-gray-800">Aggiungi una recensione</h2>
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+        Aggiungi una recensione
+      </h2>
 
       <button
         onClick={() => setAddReview(!addReview)} // Toggle del form
@@ -61,6 +78,12 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
       >
         {addReview ? "Annulla" : "Apri form"}
       </button>
+      
+      {successMessage && (
+        <div className="p-4 bg-green-200 text-green-800 rounded-md mb-4">
+          {successMessage}
+        </div>
+      )}
 
       {addReview && (
         <div className="grid grid-cols-1 gap-4 mt-4">
@@ -136,18 +159,24 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
 
       {listaRecensioni.length > 0 ? (
         <ul className="mt-4 space-y-4">
-          {listaRecensioni.map((r, index) => (
-            <li
-              key={r.id || `review-${index}`}
-              className="p-4 bg-gray-100 rounded-lg shadow"
-            >
-              <p className="font-semibold text-lg">{r.name}</p>
-              <p className="text-gray-700">{r.comment}</p>
-              <p className="text-sm text-gray-600 mt-1">
-                Voto: <span className="font-bold">{r.vote} ⭐</span> | Giorni di soggiorno: {r.days_of_stay}
-              </p>
-            </li>
-          ))}
+          {listaRecensioni.map((r, index) => {
+            const reviewDate = new Date(r.created_in);
+            const formattedDate = reviewDate.toLocaleDateString("it-IT"); // Formatta la data in italiano
+
+            return (
+              <li
+                key={r.id || `review-${index}`}
+                className="p-4 bg-gray-100 rounded-lg shadow"
+              >
+                <p className="font-semibold text-lg">{r.name}</p>
+                <p className="text-gray-700">{r.comment}</p>
+                <p className="text-sm text-gray-600 mt-1">
+                  Voto: <span className="font-bold">{r.vote} ⭐</span> | Giorni
+                  di soggiorno: {r.days_of_stay} | Data: {formattedDate}
+                </p>
+              </li>
+            );
+          })}
         </ul>
       ) : (
         <p className="mt-4 text-gray-600">Ancora nessuna recensione.</p>
