@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "./GlobalContext";
 
 function CardDettagliata({
   address,
@@ -15,6 +16,7 @@ function CardDettagliata({
   title,
 }) {
   const navigate = useNavigate();
+  const { apiUrl } = useGlobalContext();
 
   return (
     <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6 mt-6">
@@ -46,7 +48,7 @@ function CardDettagliata({
           images.map((image, index) => (
             <img
               key={index}
-              src={image}
+              src={`${apiUrl}${image}`}
               alt={`Immagine ${index + 1}`}
               className="w-full h-40 object-cover rounded-md shadow-md"
             />

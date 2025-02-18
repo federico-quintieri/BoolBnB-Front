@@ -9,7 +9,7 @@ export function DettaglioImmobile() {
   const [immobile, setImmobile] = useState(null);
   const { slug } = useParams();
   const { apiUrl } = useGlobalContext();
-console.log(immobile)
+  console.log(immobile);
   useEffect(() => {
     axios.get(`${apiUrl}immobili/${slug}`).then((response) => {
       setImmobile(response.data);
@@ -34,6 +34,7 @@ console.log(immobile)
             square_meters={immobile.square_meters}
             tipo={immobile.tipo}
             key={immobile.slug}
+            images={immobile.images}
           />
           <Recensioni
             recensioni={immobile.recensioni}

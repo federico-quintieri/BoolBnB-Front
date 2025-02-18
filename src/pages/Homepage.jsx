@@ -29,6 +29,7 @@ export function Homepage() {
             value={input}
           />
         </label>
+        <button >Cerca</button>
       </form>
       <div className="mt-6 flex justify-center w-full">
         <CardList />
