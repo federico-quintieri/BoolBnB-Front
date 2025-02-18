@@ -2,6 +2,7 @@ import { useGlobalContext } from "../components/GlobalContext";
 import Card from "../components/Card";
 import { useState } from "react";
 import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 
 const _inputs = {
   city: "",
@@ -24,11 +25,21 @@ export function RicercaImmobile() {
     }));
   };
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const HandleOnSubmitGet = (event) => {
     event.preventDefault();
-    const queryParams = new URLSearchParams(inputs).toString();
+
+    const filteredInputs = Object.fromEntries(
+      Object.entries(inputs).filter(([_, value]) => value !== "" && value !== 0)
+    );
+
+    setSearchParams(filteredInputs); // Aggiorna l'URL
+
     axios
-      .get(`${apiUrl}immobili?${queryParams}`)
+      .get(
+        `${apiUrl}immobili?${new URLSearchParams(filteredInputs).toString()}`
+      )
       .then((response) => {
         setImmobili(response.data.data);
         console.log(response.data.data);
@@ -64,7 +75,7 @@ export function RicercaImmobile() {
             type="number"
             id="rooms"
             name="rooms"
-            min="1"
+            min="0"
             value={inputs.rooms}
             onChange={HandleOnChange}
             className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -78,7 +89,7 @@ export function RicercaImmobile() {
             type="number"
             id="bathrooms"
             name="bathrooms"
-            min="1"
+            min="0"
             value={inputs.bathrooms}
             onChange={HandleOnChange}
             className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -92,7 +103,7 @@ export function RicercaImmobile() {
             type="number"
             id="beds"
             name="beds"
-            min="1"
+            min="0"
             value={inputs.beds}
             onChange={HandleOnChange}
             className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -109,7 +120,6 @@ export function RicercaImmobile() {
             name="id_type_real_estate"
             value={inputs.id_type_real_estate}
             onChange={HandleOnChange}
-            required
             className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Seleziona il tipo</option>
@@ -134,6 +144,11 @@ export function RicercaImmobile() {
           </button>
         </div>
       </form>
+      <div className="mt-4 text-lg font-semibold">
+        {immobili.length > 0
+          ? `Risultati trovati: ${immobili.length}`
+          : "Nessun risultato trovato"}
+      </div>
 
       <div className="mt-8">
         {immobili &&
@@ -141,7 +156,7 @@ export function RicercaImmobile() {
             <Card
               city={immobile.city}
               description={immobile.description}
-              images={immobile.image}
+              images={immobile.images}
               tipo={immobile.tipo}
               title={immobile.title}
               slug={immobile.slug}
