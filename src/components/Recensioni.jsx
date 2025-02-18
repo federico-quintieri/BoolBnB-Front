@@ -78,9 +78,9 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
       >
         {addReview ? "Annulla" : "Apri form"}
       </button>
-      
+
       {successMessage && (
-        <div className="p-4 bg-green-200 text-green-800 rounded-md mb-4">
+        <div className="p-4 bg-green-200 text-green-800 rounded-md mb-4 mt-2">
           {successMessage}
         </div>
       )}
@@ -127,7 +127,7 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
                 name="vote"
                 value={recensione.vote}
                 onChange={handleOnChange}
-                min="0"
+                min="1"
                 max="5"
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               />
@@ -138,7 +138,7 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
               <input
                 type="number"
                 name="days_of_stay"
-                min="0"
+                min="1"
                 value={recensione.days_of_stay}
                 onChange={handleOnChange}
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
