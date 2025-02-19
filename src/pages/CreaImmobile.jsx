@@ -130,6 +130,7 @@ export function CreaImmobile() {
             onChange={HandleOnChange}
             placeholder="Titolo"
             autoComplete="off"
+            minLength="4"
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
           />
