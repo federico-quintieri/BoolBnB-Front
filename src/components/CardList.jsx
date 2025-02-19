@@ -3,15 +3,13 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useGlobalContext } from "../components/GlobalContext";
 
-export function CardList() {
+export function CardList({ numeroCard }) {
   const [immobili, setImmobili] = useState([]);
-
   const { apiUrl } = useGlobalContext();
 
   useEffect(() => {
     axios.get(`${apiUrl}immobili`).then((response) => {
       setImmobili(response.data.data);
-      //console.log(response.data.data[7].images);
     });
   }, []);
 
@@ -19,7 +17,7 @@ export function CardList() {
     <div className="container flex justify-center mx-auto p-4">
       {immobili.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {immobili.map((immobile) => (
+          {immobili.slice(0, numeroCard).map((immobile) => ( // 🔹 Limita il numero di card
             <Card
               key={immobile.slug}
               city={immobile.city}
@@ -28,6 +26,9 @@ export function CardList() {
               tipo={immobile.tipo}
               title={immobile.title}
               slug={immobile.slug}
+              bathrooms={immobile.bathrooms}
+              beds={immobile.beds}
+              rooms={immobile.rooms}
             />
           ))}
         </div>

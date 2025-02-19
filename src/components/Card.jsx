@@ -1,18 +1,28 @@
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "./GlobalContext";
+import { FaBed, FaBath, FaDoorOpen } from "react-icons/fa"; // Importa le icone
 
-const Card = ({ title, tipo, images, description, city, slug }) => {
-
+const Card = ({
+  title,
+  tipo,
+  images,
+  description,
+  city,
+  slug,
+  beds,
+  rooms,
+  bathrooms,
+}) => {
   const { apiUrl } = useGlobalContext();
-  //console.log(`${apiUrl}${images[0]}`);
+
   return (
     <div className="bg-white shadow-lg rounded-2xl overflow-hidden max-w-sm border border-gray-200 p-4 flex flex-col">
       {/* Immagine principale */}
       <img
         src={`${apiUrl}${images[0]}`}
         alt={title}
-        width="100%" // o una larghezza in px, tipo 300px
-        height="auto" // o una altezza in px, tipo 200px
+        width="100%"
+        height="auto"
         className="w-full h-48 object-cover rounded-md"
       />
       <div className="p-4 flex flex-col flex-grow">
@@ -22,8 +32,22 @@ const Card = ({ title, tipo, images, description, city, slug }) => {
           <span className="text-1xl font-semibold text-gray-800 mb-2 mr-1.5">
             📍 {city}
           </span>
-          {tipo}{" "}
+          {tipo}
         </h3>
+
+        {/* Icone per le informazioni */}
+        <div className="text-gray-700 text-sm mb-4 flex gap-4">
+          <p className="flex items-center gap-1">
+            <FaDoorOpen className="text-blue-500" /> <span>{rooms}</span>
+          </p>
+          <p className="flex items-center gap-1">
+            <FaBed className="text-blue-500" /> <span>{beds}</span>
+          </p>
+          <p className="flex items-center gap-1">
+            <FaBath className="text-blue-500" /> <span>{bathrooms}</span>
+          </p>
+        </div>
+
         <p className="text-gray-700 text-sm mb-4 line-clamp-3">{description}</p>
 
         <div className="mt-auto">
