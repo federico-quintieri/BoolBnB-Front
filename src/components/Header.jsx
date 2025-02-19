@@ -4,9 +4,7 @@ export function Header() {
   return (
     <header className="bg-gray-900 text-white p-4 shadow-md">
       <nav className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-xl font-bold hover:text-gray-400 transition">
-          Bool BnB
-        </Link>
+        <h1 className="text-xl font-bold">Bool BnB</h1>
         <ul className="flex gap-6">
           <li>
             <Link to="/" className="hover:text-gray-400 transition">Home</Link>
