@@ -1,6 +1,6 @@
 import { useGlobalContext } from "../components/GlobalContext";
 import Card from "../components/Card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 
@@ -15,26 +15,36 @@ export function RicercaImmobile() {
   const [immobili, setImmobili] = useState([]);
   const [inputs, setInputs] = useState(_inputs);
   const { apiUrl } = useGlobalContext();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    const cityFromUrl = searchParams.get("city");
+    if (cityFromUrl) {
+      setInputs((prev) => ({ ...prev, city: cityFromUrl }));
+      fetchImmobili({ city: cityFromUrl });
+    }
+  }, []);
 
   const HandleOnChange = (event) => {
     const { name, value, type } = event.target;
-    setInputs((prev_Inputs) => ({
-      ...prev_Inputs,
+    setInputs((prev) => ({
+      ...prev,
       [name]:
         type === "number" || name === "tipo" ? parseInt(value, 10) || 0 : value,
     }));
   };
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
   const HandleOnSubmitGet = (event) => {
     event.preventDefault();
+    fetchImmobili(inputs);
+  };
 
+  const fetchImmobili = (params) => {
     const filteredInputs = Object.fromEntries(
-      Object.entries(inputs).filter(([_, value]) => value !== "" && value !== 0)
+      Object.entries(params).filter(([_, value]) => value !== "" && value !== 0)
     );
 
-    setSearchParams(filteredInputs); // Aggiorna l'URL
+    setSearchParams(filteredInputs);
 
     axios
       .get(
@@ -48,7 +58,6 @@ export function RicercaImmobile() {
         console.error("Errore nella richiesta:", error);
       });
   };
-
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-8 mb-8">
       <h2 className="text-2xl font-bold mb-4 text-left">Ricerca Immobile</h2>
@@ -162,6 +171,9 @@ export function RicercaImmobile() {
               title={immobile.title}
               slug={immobile.slug}
               key={immobile.slug}
+              bathrooms={immobile.bathrooms}
+              beds={immobile.beds}
+              rooms={immobile.rooms}
             />
           ))}
       </div>
