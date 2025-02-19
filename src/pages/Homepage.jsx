@@ -61,7 +61,7 @@ export function Homepage() {
           </h1>
         </div>
         <div className="mt-6 flex justify-center w-full">
-          <CardList numeroCard={4} />
+          <CardList numeroCard={6} />
         </div>
       </div>
     </div>
