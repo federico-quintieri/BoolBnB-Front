@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "./GlobalContext";
+import ImageCarousel from "./ImageCarousel";
 
 function CardDettagliata({
   address,
@@ -20,18 +21,8 @@ function CardDettagliata({
 
   return (
     <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6 mt-6">
-      <h1 className="text-3xl font-semibold text-gray-800 mb-4">{title}</h1>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-        {images &&
-          images.map((image, index) => (
-            <img
-              key={index}
-              src={`${apiUrl}${image}`}
-              alt={`Immagine ${index + 1}`}
-              className="w-full h-40 object-cover rounded-md shadow-md"
-            />
-          ))}
-      </div>
+      <h1 className="text-3xl font-semibold text-center text-gray-800 mb-4">{title}</h1>
+      {images && <ImageCarousel images={images} />}
       <p className="text-gray-700 mt-2.5 mb-1.5">
         <span className="font-semibold">Tipo:</span> {tipo}
       </p>

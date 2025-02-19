@@ -5,13 +5,12 @@ const recensioneStart = {
   name: "",
   comment: "",
   email: "",
-  vote: 0,
-  days_of_stay: 0,
+  vote: "",
+  days_of_stay: "",
   id_real_estate: 0,
 };
 
 function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
-  const [recensione, setRecensione] = useState(recensioneStart);
   const [listaRecensioni, setListaRecensioni] = useState(recensioni);
   const [addReview, setAddReview] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -25,18 +24,17 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
     }
   }, [recensioni]);
 
-  const handleOnChange = (event) => {
-    const { name, value } = event.target;
-    setRecensione((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const handleAddReview = (event) => {
+    event.preventDefault(); // Evita il ricaricamento della pagina
 
-  const handleAddReview = () => {
+    const formData = new FormData(event.target);
     const newReview = {
-      ...recensione,
-      created_in: new Date().toISOString(), // Aggiungi la data corrente in formato ISO
+      name: formData.get("name"),
+      email: formData.get("email"),
+      comment: formData.get("comment"),
+      vote: parseInt(formData.get("vote")),
+      days_of_stay: parseInt(formData.get("days_of_stay")),
+      created_in: new Date().toISOString(),
       id_real_estate: idRealEstate,
     };
 
@@ -50,7 +48,6 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
             : [newReview],
         }));
 
-        setRecensione(recensioneStart); // Reset dei campi dopo l'invio
         setAddReview(false); // Chiudi il form dopo l'invio
 
         // Imposta il messaggio di successo
@@ -64,6 +61,8 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
       .catch((error) =>
         console.error("Errore nell'aggiunta della recensione:", error)
       );
+
+    event.target.reset(); // Reset automatico del form
   };
 
   return (
@@ -73,7 +72,7 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
       </h2>
 
       <button
-        onClick={() => setAddReview(!addReview)} // Toggle del form
+        onClick={() => setAddReview(!addReview)}
         className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md mt-2"
       >
         {addReview ? "Annulla" : "Apri form"}
@@ -86,14 +85,15 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
       )}
 
       {addReview && (
-        <div className="grid grid-cols-1 gap-4 mt-4">
+        <form onSubmit={handleAddReview} className="grid grid-cols-1 gap-4 mt-4">
           <label className="block">
             <span className="text-gray-700">Nome:</span>
             <input
               type="text"
               name="name"
-              value={recensione.name}
-              onChange={handleOnChange}
+              required
+              defaultValue=""
+              autoComplete="off"
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             />
           </label>
@@ -103,8 +103,9 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
             <input
               type="email"
               name="email"
-              value={recensione.email}
-              onChange={handleOnChange}
+              required
+              defaultValue=""
+              autoComplete="off"
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             />
           </label>
@@ -113,22 +114,24 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
             <span className="text-gray-700">Commento:</span>
             <textarea
               name="comment"
-              value={recensione.comment}
-              onChange={handleOnChange}
+              required
+              defaultValue=""
+              minLength={8}
+              autoComplete="off"
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             ></textarea>
           </label>
 
           <div className="grid grid-cols-2 gap-4">
             <label className="block">
-              <span className="text-gray-700">Voto (0-5):</span>
+              <span className="text-gray-700">Voto (1-5):</span>
               <input
                 type="number"
                 name="vote"
-                value={recensione.vote}
-                onChange={handleOnChange}
+                required
                 min="1"
                 max="5"
+                defaultValue=""
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               />
             </label>
@@ -138,21 +141,21 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
               <input
                 type="number"
                 name="days_of_stay"
+                required
                 min="1"
-                value={recensione.days_of_stay}
-                onChange={handleOnChange}
+                defaultValue=""
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               />
             </label>
           </div>
 
           <button
-            onClick={handleAddReview}
+            type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md mt-4"
           >
             Invia Recensione
           </button>
-        </div>
+        </form>
       )}
 
       <h2 className="text-2xl font-semibold mt-6 text-gray-800">Recensioni</h2>
@@ -161,7 +164,7 @@ function Recensioni({ recensioni, idRealEstate, apiUrl, setImmobile }) {
         <ul className="mt-4 space-y-4">
           {listaRecensioni.map((r, index) => {
             const reviewDate = new Date(r.created_in);
-            const formattedDate = reviewDate.toLocaleDateString("it-IT"); // Formatta la data in italiano
+            const formattedDate = reviewDate.toLocaleDateString("it-IT");
 
             return (
               <li

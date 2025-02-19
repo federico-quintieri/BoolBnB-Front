@@ -64,6 +64,7 @@ export function RicercaImmobile() {
             name="city"
             value={inputs.city}
             onChange={HandleOnChange}
+            autoComplete="off"
             className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -150,7 +151,7 @@ export function RicercaImmobile() {
           : "Nessun risultato trovato"}
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
         {immobili &&
           immobili.map((immobile) => (
             <Card

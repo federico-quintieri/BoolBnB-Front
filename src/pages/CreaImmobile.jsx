@@ -91,6 +91,7 @@ export function CreaImmobile() {
               value={inputs.owner_email}
               onChange={HandleOnChange}
               placeholder="Email"
+              autoComplete="off"
               required
               className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             />
@@ -108,6 +109,7 @@ export function CreaImmobile() {
               value={inputs.owner_name}
               onChange={HandleOnChange}
               placeholder="Nome"
+              autoComplete="off"
               required
               className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             />
@@ -127,6 +129,7 @@ export function CreaImmobile() {
             value={inputs.title}
             onChange={HandleOnChange}
             placeholder="Titolo"
+            autoComplete="off"
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
           />
@@ -266,6 +269,7 @@ export function CreaImmobile() {
               value={inputs.city}
               onChange={HandleOnChange}
               placeholder="Città"
+              autoComplete="off"
               required
               className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             />
@@ -283,6 +287,7 @@ export function CreaImmobile() {
               value={inputs.address}
               onChange={HandleOnChange}
               placeholder="Indirizzo"
+              autoComplete="off"
               required
               className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             />
@@ -301,6 +306,7 @@ export function CreaImmobile() {
             value={inputs.description}
             onChange={HandleOnChange}
             placeholder="Descrizione dell'immobile"
+            autoComplete="off"
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
           />
