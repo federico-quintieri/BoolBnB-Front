@@ -109,6 +109,7 @@ export function CreaImmobile() {
               value={inputs.owner_name}
               onChange={HandleOnChange}
               placeholder="Nome"
+              minLength="3"
               autoComplete="off"
               required
               className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
@@ -271,6 +272,7 @@ export function CreaImmobile() {
               onChange={HandleOnChange}
               placeholder="Città"
               autoComplete="off"
+              minLength="3"
               required
               className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             />
@@ -289,6 +291,7 @@ export function CreaImmobile() {
               onChange={HandleOnChange}
               placeholder="Indirizzo"
               autoComplete="off"
+              minLength="3"
               required
               className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             />
@@ -308,6 +311,7 @@ export function CreaImmobile() {
             onChange={HandleOnChange}
             placeholder="Descrizione dell'immobile"
             autoComplete="off"
+            minLength="10"
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
           />
